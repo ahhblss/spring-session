@@ -76,6 +76,7 @@ public final class CookieHttpSessionIdResolver implements HttpSessionIdResolver 
 	@Override
 	public void setSessionId(HttpServletRequest request, HttpServletResponse response,
 			String sessionId) {
+		//todo ?????sessionId,????
 		if (sessionId.equals(request.getAttribute(WRITTEN_SESSION_ID_ATTR))) {
 			return;
 		}

@@ -205,10 +205,13 @@ public class SessionRepositoryFilter<S extends Session> extends OncePerRequestFi
 
 		private final ServletContext servletContext;
 
+		// ?????session
 		private S requestedSession;
 
+		// ?????sesssion??????,?requestedSession?????
 		private boolean requestedSessionCached;
 
+		// ?????sessionid
 		private String requestedSessionId;
 
 		private Boolean requestedSessionIdValid;
@@ -239,6 +242,7 @@ public class SessionRepositoryFilter<S extends Session> extends OncePerRequestFi
 				clearRequestedSessionCache();
 				SessionRepositoryFilter.this.sessionRepository.save(session);
 				String sessionId = session.getId();
+				// todo ???????????
 				if (!isRequestedSessionIdValid()
 						|| !sessionId.equals(getRequestedSessionId())) {
 					SessionRepositoryFilter.this.httpSessionIdResolver.setSessionId(this,
@@ -372,12 +376,14 @@ public class SessionRepositoryFilter<S extends Session> extends OncePerRequestFi
 			if (!this.requestedSessionCached) {
 				List<String> sessionIds = SessionRepositoryFilter.this.httpSessionIdResolver
 						.resolveSessionIds(this);
+				// ???cookie??session
 				for (String sessionId : sessionIds) {
 					if (this.requestedSessionId == null) {
 						this.requestedSessionId = sessionId;
 					}
 					S session = SessionRepositoryFilter.this.sessionRepository
 							.findById(sessionId);
+					// ??session
 					if (session != null) {
 						this.requestedSession = session;
 						this.requestedSessionId = sessionId;
@@ -441,6 +447,7 @@ public class SessionRepositoryFilter<S extends Session> extends OncePerRequestFi
 			public void include(ServletRequest request, ServletResponse response)
 					throws ServletException, IOException {
 				SessionRepositoryRequestWrapper.this.commitSession();
+				//			include?forward???????????include????servlet????????????forward?????servlet???
 				this.delegate.include(request, response);
 			}
 

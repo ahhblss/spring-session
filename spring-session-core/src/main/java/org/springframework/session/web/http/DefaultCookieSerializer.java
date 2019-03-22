@@ -39,7 +39,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author Rob Winch
  * @author Vedran Pavic
- * @author Eddú Meléndez
+ * @author Edd? Mel?ndez
  * @since 1.1
  */
 public class DefaultCookieSerializer implements CookieSerializer {
@@ -101,6 +101,7 @@ public class DefaultCookieSerializer implements CookieSerializer {
 							? base64Decode(cookie.getValue())
 							: cookie.getValue());
 					if (sessionId == null) {
+						// Unable to Base64 decode value returned null
 						continue;
 					}
 					if (this.jvmRoute != null && sessionId.endsWith(this.jvmRoute)) {
@@ -127,6 +128,7 @@ public class DefaultCookieSerializer implements CookieSerializer {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(this.cookieName).append('=');
+		// ??cookie value  eg:??jvmRoute?base64Encoding
 		String value = getValue(cookieValue);
 		if (value != null && value.length() > 0) {
 			validateValue(value);
@@ -151,9 +153,11 @@ public class DefaultCookieSerializer implements CookieSerializer {
 			validatePath(path);
 			sb.append("; Path=").append(path);
 		}
+//		??????????????????????? SSL ? HTTPS ?????? secure ??? cookie ?????????
 		if (isSecureCookie(request)) {
 			sb.append("; Secure");
 		}
+//		???? cookie ????? JavaScript ? document.cookie ????
 		if (this.useHttpOnlyCookie) {
 			sb.append("; HttpOnly");
 		}
@@ -372,6 +376,7 @@ public class DefaultCookieSerializer implements CookieSerializer {
 			throw new IllegalStateException(
 					"Cannot set both domainName and domainNamePattern");
 		}
+//		Enables case-insensitive matching
 		this.domainNamePattern = Pattern.compile(domainNamePattern,
 				Pattern.CASE_INSENSITIVE);
 	}

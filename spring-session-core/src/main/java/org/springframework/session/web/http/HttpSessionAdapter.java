@@ -95,6 +95,7 @@ class HttpSessionAdapter<S extends Session> implements HttpSession {
 		return this.servletContext;
 	}
 
+//	the amount of time that the Sessionshould be kept alive  between client requests
 	@Override
 	public void setMaxInactiveInterval(int interval) {
 		this.session.setMaxInactiveInterval(Duration.ofSeconds(interval));
